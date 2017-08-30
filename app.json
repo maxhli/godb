@@ -1,0 +1,14 @@
+{
+  "name": "godb",
+  "description": "Database for Go Programming Language",
+  "keywords": [
+    "getting-started",
+    "go",
+    "sample",
+    "example"
+  ],
+  "image": "heroku/go:1.6",
+  "mount_dir": "src/github.com/heroku/godb",
+  "website": "http://github.com/heroku/godb",
+  "repository": "http://github.com/heroku/godb"
+}

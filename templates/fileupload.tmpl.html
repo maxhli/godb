@@ -1,0 +1,128 @@
+
+{{template "header.tmpl.html"}}
+<body>
+{{template "nav.tmpl.html"}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div>
+                <h3 class="text-center">Use this form to upload your receipts for computer services, or contract
+                    files that you have with other companies.
+                </h3>
+            </div>
+            <form action = "/fileupload"
+                  method = "post"
+                  enctype='multipart/form-data'>
+
+                <table class="spacing-table">
+                    <tr>
+                        <td>
+                            <label for="id_full_name">Full Name:</label>
+                        </td>
+                        <td>
+                            <input id="id_full_name" maxlength="254"
+                                   name="full_name" type="text" required />
+                        </td>
+                        <td>
+            <span class="helptext text-right">
+                Full Name
+            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_email_address">Email Address:</label>
+                        </td>
+                        <td>
+                            <input id="id_email_address" maxlength="255"
+                                   name="email_address" type="email" required />
+                        </td>
+                        <td>
+            <span class="helptext">
+                Email Address
+            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_cell_phone_number">Cell Phone Number:</label>
+                        </td>
+                        <td>
+                            <input id="id_cell_phone_number"
+                                   maxlength="255"
+                                   name="cell_phone_number"
+                                   type="text" required />
+                        </td>
+                        <td>
+            <span class="helptext">
+                Cell Phone Number
+            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_creation_DT">Created On:</label>
+                        </td>
+                        <td>
+                            <input id="id_creation_DT"
+                                   name="creation_DT"
+                                   type="text"
+                                   value="2017-08-12 11:04:21"
+                                   required />
+                        </td>
+                        <td>
+            <span class="helptext">
+                Creation Date/Time. Format: YYYY-MM-DD HH:MM:SS
+            </span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_modification_DT">Modified On:</label>
+                        </td>
+                        <td>
+                            <input id="id_modification_DT" name="modification_DT"
+                                   type="text" value="2017-08-12 11:04:21"/>
+                        </td>
+                        <td>
+            <span class="helptext">
+                Date/Time. Format: YYYY-MM-DD HH:MM:SS
+            </span></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="id_file">File to be uploaded: </label>
+                        </td>
+                        <td>
+                            <input type = "file" id="id_file" name="file"
+                                   placeholder ="Picture/scanned image here" required/>
+                        </td>
+                        <td>
+            <span class="helptext">
+                File Name. Required.
+            </span></td>
+                    </tr>
+
+                </table>
+
+
+
+                <input class="btn btn-primary" type="submit" value="Save"/>
+            </form>
+
+            <a class="text-center btn btn-primary" href="/">
+                Back to the main page</a>
+
+
+        </div>
+    </div>
+</div>
+
+<script src="/static/bootstrap3.3.6/js/jquery-2.2.4.min.js">
+</script>
+<script src="/static/bootstrap3.3.6/js/bootstrap.min.js">
+</script>
+
+</body>

@@ -83,6 +83,7 @@ func main() {
 		var result int
 		if err := rows.Scan(&result); err != nil {
 			log.Fatal(err)
+
 		}
 		fmt.Printf("Result is %d\n", result)
 	}

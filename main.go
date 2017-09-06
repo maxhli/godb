@@ -15,7 +15,7 @@ import (
 	//"github.com/jinzhu/gorm"
 	//_ "github.com/jinzhu/gorm/dialects/postgres"
 
-	"github.com/gin-gonic/gin"
+	 "github.com/gin-gonic/gin"
 	"fmt"
 
 	"context"
@@ -31,6 +31,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 
 	_ "github.com/jinzhu/gorm"
+	_ "github.com/gin-gonic/gin"
 )
 
 type Product struct {
@@ -40,6 +41,14 @@ type Product struct {
 	Fullname string
 	Email string
 }
+
+type Book struct {
+	isbn  string
+	title  string
+	author string
+	price  float32
+}
+
 
 //func repeatHandler(c *gin.Context) {
 //	var buffer bytes.Buffer
@@ -89,7 +98,31 @@ func main() {
 		}
 		fmt.Printf("Result is %d\n", result)
 	}
+//////////////////////////////////////
+	rows, err := db.Query("SELECT * FROM books")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
 
+	bks := make([]*Book, 0)
+	for rows.Next() {
+		bk := new(Book)
+		err := rows.Scan(&bk.isbn, &bk.title, &bk.author, &bk.price)
+		if err != nil {
+			log.Fatal(err)
+		}
+		bks = append(bks, bk)
+	}
+	if err = rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	for _, bk := range bks {
+		fmt.Printf("%s, %s, %s, £%.2f\n", bk.isbn, bk.title, bk.author, bk.price)
+	}
+
+//////////////////////////////////////
 	//if !db.HasTable("products") {
 	//	db.CreateTable(&Product{})
 	//	db.AutoMigrate(&Product{})

@@ -64,6 +64,8 @@ func main() {
 
 
 	var URI = os.Getenv("URI")
+
+
 	db, errDB := sql.Open("postgres", URI)
 	defer db.Close()
 

@@ -96,7 +96,7 @@ func main() {
 			log.Fatal(err)
 
 		}
-		fmt.Printf("Result is %d\n", result)
+		log.Printf("Result is %d\n", result)
 	}
 //////////////////////////////////////
 	rows, err := db.Query("SELECT * FROM books")
@@ -119,7 +119,7 @@ func main() {
 	}
 
 	for _, bk := range bks {
-		fmt.Printf("%s, %s, %s, £%.2f\n", bk.isbn, bk.title, bk.author, bk.price)
+		log.Printf("%s, %s, %s, £%.2f\n", bk.isbn, bk.title, bk.author, bk.price)
 	}
 
 //////////////////////////////////////

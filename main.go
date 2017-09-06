@@ -1,4 +1,4 @@
-package godb
+package main
 
 
 import (
@@ -185,6 +185,8 @@ func main() {
 		token := ""
 		creds := credentials.NewStaticCredentials(
 			AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, token)
+
+
 
 		_, errCred := creds.Get()
 		if errCred != nil {

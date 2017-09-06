@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/satori/go.uuid"
 
 	"database/sql"
 
@@ -32,6 +33,8 @@ import (
 
 	_ "github.com/jinzhu/gorm"
 	_ "github.com/gin-gonic/gin"
+	_ "github.com/aws/aws-sdk-go/private/protocol"
+	"strings"
 )
 
 type Product struct {
@@ -98,6 +101,23 @@ func main() {
 		}
 		log.Printf("Result is %d\n", result)
 	}
+
+	isbn := uuid.NewV4()
+	title := "I am good"
+	author := "Max Li"
+	price := 10.0
+	//////////////////////////
+	_, errInsert := db.
+	Exec("INSERT INTO books VALUES($1, $2, $3, $4)",
+		isbn, title, author, price)
+
+	if errInsert != nil {
+		log.Println("DB Insertion is in error.")
+	} else {
+		log.Println("DB Insertion successful.")
+	}
+
+	/////////////////////////
 //////////////////////////////////////
 	rows, err := db.Query("SELECT * FROM books")
 	if err != nil {
@@ -119,7 +139,9 @@ func main() {
 	}
 
 	for _, bk := range bks {
-		log.Printf("%s, %s, %s, £%.2f\n", bk.isbn, bk.title, bk.author, bk.price)
+		log.Printf("%s, %s, %s, £%.2f\n",
+			strings.TrimSpace(bk.isbn),
+				bk.title, bk.author, bk.price)
 	}
 
 //////////////////////////////////////

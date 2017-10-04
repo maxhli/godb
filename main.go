@@ -1,6 +1,5 @@
 package main
 
-
 import (
 	"log"
 	"net/http"
@@ -12,11 +11,10 @@ import (
 
 	_ "github.com/lib/pq"
 
-
 	//"github.com/jinzhu/gorm"
 	//_ "github.com/jinzhu/gorm/dialects/postgres"
 
-	 "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 	"fmt"
 
 	"context"
@@ -39,19 +37,18 @@ import (
 
 type Product struct {
 	// gorm.Model
-	Code string
-	Price uint
+	Code     string
+	Price    uint
 	Fullname string
-	Email string
+	Email    string
 }
 
 type Book struct {
-	isbn  string
+	isbn   string
 	title  string
 	author string
 	price  float32
 }
-
 
 //func repeatHandler(c *gin.Context) {
 //	var buffer bytes.Buffer
@@ -60,7 +57,6 @@ type Book struct {
 //	}
 //	c.String(http.StatusOK, buffer.String())
 //}
-
 
 func main() {
 
@@ -74,9 +70,7 @@ func main() {
 	args += "password=" + os.Getenv("password")
 	log.Println("args is: ", args)
 
-
 	var URI = os.Getenv("URI")
-
 
 	db, errDB := sql.Open("postgres", URI)
 	defer db.Close()
@@ -118,7 +112,7 @@ func main() {
 	}
 
 	/////////////////////////
-//////////////////////////////////////
+	//////////////////////////////////////
 	rows, err := db.Query("SELECT * FROM books")
 	if err != nil {
 		log.Fatal(err)
@@ -141,10 +135,10 @@ func main() {
 	for _, bk := range bks {
 		log.Printf("%s, %s, %s, £%.2f\n",
 			strings.TrimSpace(bk.isbn),
-				bk.title, bk.author, bk.price)
+			bk.title, bk.author, bk.price)
 	}
 
-//////////////////////////////////////
+	//////////////////////////////////////
 	//if !db.HasTable("products") {
 	//	db.CreateTable(&Product{})
 	//	db.AutoMigrate(&Product{})
@@ -172,11 +166,9 @@ func main() {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
 
-
 	router.GET("/onlinetraces", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "onlinetraces.tmpl.html", nil)
 	})
-
 
 	router.GET("/traces", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "onlinetraces.tmpl.html", nil)
@@ -190,7 +182,6 @@ func main() {
 		c.HTML(http.StatusOK, "onlinetraces.tmpl.html", nil)
 	})
 
-
 	//router.GET("/repeat", repeatHandler)
 	// the above one causes problem. Max Li
 
@@ -200,12 +191,10 @@ func main() {
 		file, _ := c.FormFile("file")
 		log.Println("The file name is: ", file.Filename)
 
-
 		emailAddress := c.PostForm("email_address")
 		log.Println("The email address is: ", emailAddress)
 		cellPhoneNumber := c.PostForm("cell_phone_number")
 		log.Println("The cell phone number is: ", cellPhoneNumber)
-
 
 		//db.Create(&Product{Code: "L1212", Price: 1000, Email: emailAddress })
 
@@ -236,14 +225,11 @@ func main() {
 		AWS_SECRET_ACCESS_KEY :=
 			os.Getenv("AWS-SECRET-ACCESS-KEY")
 
-
 		// If you're working with temporary security credentials,
 		// you can also keep the session token in AWS_SESSION_TOKEN.
 		token := ""
 		creds := credentials.NewStaticCredentials(
 			AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, token)
-
-
 
 		_, errCred := creds.Get()
 		if errCred != nil {
@@ -256,9 +242,8 @@ func main() {
 
 		sess := session.Must(session.NewSession(
 			&aws.Config{
-				Region: aws.String(endpoints.UsEast2RegionID),
+				Region:      aws.String(endpoints.UsEast2RegionID),
 				Credentials: creds,
-
 			}))
 		// Create a new instance of the service's client with a Session.
 		// Optional aws.Config values can also be provided as variadic arguments
@@ -276,8 +261,6 @@ func main() {
 		// Ensure the context is canceled to prevent leaking.
 		// See context package for more information, https://golang.org/pkg/context/
 		defer cancelFn()
-
-
 
 		//f, errOpen  := os.Open(file.Filename)
 		f, errOpen := file.Open()
@@ -308,7 +291,6 @@ func main() {
 		}
 
 		log.Printf("successfully uploaded file to %s/%s\n", bucket, key)
-
 
 		c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", file.Filename))
 	})

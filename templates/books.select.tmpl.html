@@ -37,38 +37,46 @@
                 <h3 class="text-center">Use this form to view the detail of a book.
                     Clicking on "Back to the list" does not update anything.</h3>
             </div>
-                <div>
+                <div style="padding-bottom: 10px">
 
         <span class="right20percent">
-            <label for="id_Isbn">ISBN:</label>
+            <label for="id_Isbn"
+                   style="display: inline-block; width: 140px; text-align: right;">
+                ISBN:</label>
         </span>
                     <input id="id_Isbn" maxlength="254"
                            name="Isbn" type="text" value="{{.Isbn}}" readonly/>
                     <span class="helptext">ISBN</span>
                 </div>
-                <div>
+
+
+            <div style="padding-bottom: 10px">
 
         <span class="right20percent">
-             <label for="id_Title">Title:</label>
+            <label for="id_Isbn"
+                   style="display: inline-block; width: 140px; text-align: right;">
+                Title:</label>
         </span>
                     <input id="id_Title" maxlength="255"
                            name="Title" type="text" value="{{.Title}}" readonly/>
                     <span class="helptext">Title
         </span>
                 </div>
-                <div>
+            <div style="padding-bottom: 10px">
 
         <span class="right20percent">
-            <label for="id_Author">Author:</label>
+            <label for="id_Isbn"
+                   style="display: inline-block; width: 140px; text-align: right;">
+                Author:</label>
         </span>
                     <input id="id_Author" maxlength="255"
                            name="Author" type="text" value="{{.Author}}" readonly />
-                    <span class="helptext">Author        </span>
+                    <span class="helptext">Author</span>
                 </div>
-                <div>
+            <div style="padding-bottom: 10px">
 
         <span class="right20percent">
-            <label for="id_price">
+            <label for="id_Isbn" style="display: inline-block; width: 140px; text-align: right;">
                 Price:
             </label>
         </span>
@@ -80,7 +88,7 @@
 
 
 
-            <div>
+            <div style="padding-bottom: 10px">
         <span class="right20percent">
             <a class="text-center btn btn-primary"
                href="/">
@@ -94,15 +102,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <hr>
-            <p>
-                <a href="/contac-us/">Contact Us</a> |
-                <a href="/about-us/">About Us</a>
-            </p>
-        </div>
-    </div>
 
 </div>
 

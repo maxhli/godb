@@ -1,0 +1,122 @@
+
+
+
+
+<head>
+    <title>I hate password. A new password manager based on hints. Human encryption, not math encryption.
+    </title>
+
+    <meta name="keywords" content=
+            "new password manager, hint, password hint, password, username, website name, password manager"
+    />
+    <meta name="description" content=
+            "Free Password Manager based on hints. No math encryption, just human encryption">
+
+
+
+    <link rel="icon" type="image/x-icon"
+          href="/static/images/drawing-svg-i-hate-passwordv4.ico" />
+
+    <link href="/static/bootstrap3.3.6/css/bootstrap.min.css"
+          rel="stylesheet" media="screen">
+    <link href="/static/css/site.css"
+          rel="stylesheet" media="screen">
+    <link rel="stylesheet"
+          href=
+                  "//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    >
+
+
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div>
+                <h3 class="text-center">Use this form to update a book.
+                    Clicking on "Back to the list" does not update anything.</h3>
+            </div>
+            <form action="/books/update/{{.Isbn}}" method="post">
+                <div>
+
+        <span class="right20percent">
+            <label for="id_Isbn">ISBN:</label>
+        </span>
+                    <input id="id_Isbn" maxlength="254"
+                           name="Isbn" type="text" value="{{ .Isbn }}" />
+                    <span class="helptext">ISBN</span>
+                </div>
+                <div>
+
+        <span class="right20percent">
+             <label for="id_Title">Title:</label>
+        </span>
+                    <input id="id_Title" maxlength="255"
+                           name="Title" type="text" value="{{ .Title }}" />
+                    <span class="helptext">Title
+        </span>
+                </div>
+                <div>
+
+        <span class="right20percent">
+            <label for="id_Author">Author:</label>
+        </span>
+                    <input id="id_Author" maxlength="255"
+                           name="Author" type="text" value="{{.Author}}" />
+                    <span class="helptext">Author        </span>
+                </div>
+                <div>
+
+        <span class="right20percent">
+            <label for="id_price">
+                Email:
+            </label>
+        </span>
+                    <input id="id_price" maxlength="255"
+                           name="Price" type="text" value="{{.Price}}" />
+                    <span class="helptext">Price
+        </span>
+                </div>
+
+                <div>
+        <span class="right20percent">
+            <input type="submit" value="Save" />
+        </span>
+                </div>
+
+            </form>
+
+            <div>
+        <span class="right20percent">
+            <a class="text-center btn btn-primary"
+               href="/password/">
+                Back to the password list</a>
+        </span>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <p>
+                <a href="/contac-us/">Contact Us</a> |
+                <a href="/about-us/">About Us</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/bootstrap3.3.6/js/jquery-2.2.4.min.js">
+</script>
+<script src="/static/bootstrap3.3.6/js/bootstrap.min.js">
+</script>
+
+</body>

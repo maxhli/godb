@@ -3,7 +3,78 @@
 <body>
   {{template "nav.tmpl.html"}}
 
-<div class="jumbotron text-center">
+  <div class="container">
+<div class="text-center" style="padding-bottom: 10px">
+      <a class="btn btn-success" href="/books/create">Create a new book</a>
+</div>
+
+  <table class="table table-responsive table-striped
+      table-bordered table-hover table-condensed">
+
+      <thead>
+      <tr >
+          <th class="text-center">
+              ISBN
+          </th>
+          <th class="text-center">
+              Title
+          </th>
+          <th class="text-center">
+              Author
+          </th>
+          <th class="text-center">
+              Price
+          </th>
+          <th class="text-center">
+              Actions
+          </th>
+
+      </tr>
+      </thead>
+
+      {{range .}}
+    <tr>
+      <td>
+        {{.Isbn}}
+      </td>
+      <td>
+        {{.Title}}
+      </td>
+      <td>
+        {{.Author}}
+      </td>
+      <td>
+        {{.Price}}
+      </td>
+
+        <td class="text-center">
+            <a class ="btn btn-primary"
+               href="/books/select/{{.Isbn}}">
+                <i class="icon-lg ion-more"
+                   title="More...">
+                </i></a>
+            <a class ="btn btn-warning"
+               href="/books/update/{{.Isbn}}">
+                <i class="icon-lg ion-edit"
+                   title="Edit">
+                </i>
+            </a>
+            <a class ="btn btn-danger"
+               href="/books/delete/{{.Isbn}}">
+                <i class="icon-lg ion-close-round"
+                   title="Delete">
+                </i>
+            </a>
+        </td>
+
+    </tr>
+  {{end }}
+
+  </table>
+</div>
+
+
+  <div class="jumbotron text-center">
   <div class="container">
     <a href="/" class="lang-logo">
       <img src="/static/lang-logo.png">
@@ -55,6 +126,7 @@
       Please do work through the Getting Started guide, even if you do know how to build such an application. The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
   </div>
 </div>
+
 
 </body>
 </html>

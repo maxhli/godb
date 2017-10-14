@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/satori/go.uuid"
+	_ "github.com/satori/go.uuid"
 
 	"database/sql"
 
@@ -33,6 +33,8 @@ import (
 	_ "github.com/gin-gonic/gin"
 	_ "github.com/aws/aws-sdk-go/private/protocol"
 	"strings"
+	_ "strconv"
+	"strconv"
 )
 
 type Product struct {
@@ -44,10 +46,10 @@ type Product struct {
 }
 
 type Book struct {
-	isbn   string
-	title  string
-	author string
-	price  float32
+	Isbn   string
+	Title  string
+	Author string
+	Price  float32
 }
 
 //func repeatHandler(c *gin.Context) {
@@ -57,6 +59,13 @@ type Book struct {
 //	}
 //	c.String(http.StatusOK, buffer.String())
 //}
+
+
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
 
 func main() {
 
@@ -96,20 +105,20 @@ func main() {
 		log.Printf("Result is %d\n", result)
 	}
 
-	isbn := uuid.NewV4()
-	title := "I am good"
-	author := "Max Li"
-	price := 10.0
-	//////////////////////////
-	_, errInsert := db.
-	Exec("INSERT INTO books VALUES($1, $2, $3, $4)",
-		isbn, title, author, price)
-
-	if errInsert != nil {
-		log.Println("DB Insertion is in error.")
-	} else {
-		log.Println("DB Insertion successful.")
-	}
+	//isbn := uuid.NewV4()
+	//title := "I am good"
+	//author := "Max Li"
+	//price := 10.0
+	////////////////////////////
+	//_, errInsert := db.
+	//Exec("INSERT INTO books VALUES($1, $2, $3, $4)",
+	//	isbn, title, author, price)
+	//
+	//if errInsert != nil {
+	//	log.Println("DB Insertion is in error.")
+	//} else {
+	//	log.Println("DB Insertion successful.")
+	//}
 
 	/////////////////////////
 	//////////////////////////////////////
@@ -122,7 +131,7 @@ func main() {
 	bks := make([]*Book, 0)
 	for rows.Next() {
 		bk := new(Book)
-		err := rows.Scan(&bk.isbn, &bk.title, &bk.author, &bk.price)
+		err := rows.Scan(&bk.Isbn, &bk.Title, &bk.Author, &bk.Price)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -134,8 +143,8 @@ func main() {
 
 	for _, bk := range bks {
 		log.Printf("%s, %s, %s, £%.2f\n",
-			strings.TrimSpace(bk.isbn),
-			bk.title, bk.author, bk.price)
+			strings.TrimSpace(bk.Isbn),
+			bk.Title, bk.Author, bk.Price)
 	}
 
 	//////////////////////////////////////
@@ -162,9 +171,179 @@ func main() {
 	router.LoadHTMLGlob("templates/*.tmpl.html")
 	router.Static("/static", "static")
 
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl.html", nil)
+
+	router.GET("/books/create", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "books.create.tmpl.html", nil)
 	})
+
+	router.GET("/books/select/:id", func(c *gin.Context) {
+
+
+		id := c.Param("id")
+		//value, _ := strconv.Atoi(id)
+
+		rows, err := db.Query("SELECT * FROM books where ISBN = $1", id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer rows.Close()
+
+		bk := new(Book)
+
+		for rows.Next() {
+			err := rows.Scan(&bk.Isbn, &bk.Title, &bk.Author, &bk.Price)
+			if err != nil {
+				log.Fatal(err)
+			}
+			// need to trim it
+			//bk.Isbn = strings.TrimSpace(bk.Isbn)
+		}
+
+
+		c.HTML(http.StatusOK, "books.select.tmpl.html", bk)
+	})
+
+	router.POST("/books/create", func(c *gin.Context) {
+		Isbn := c.PostForm("Isbn")
+		Author := c.PostForm("Author")
+		Title := c.PostForm("Title")
+		Price := c.PostForm("Price")
+
+
+		val, _ := strconv.ParseFloat(Price, 32)
+
+		_, errInsert := db.
+		Exec("INSERT INTO books(isbn, title, author, price) VALUES($1, $2, $3, $4)",
+			Isbn, Title, Author, val)
+
+		if errInsert != nil {
+			log.Println("DB Insertion is in error.")
+			c.HTML(http.StatusOK, "books.create_error.tmpl.html", errInsert)
+		} else {
+			log.Println("DB Insertion successful.")
+			rows, err := db.Query("SELECT * FROM books order by isbn")
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer rows.Close()
+
+			bks := make([]*Book, 0)
+			for rows.Next() {
+				bk := new(Book)
+				err := rows.Scan(&bk.Isbn, &bk.Title, &bk.Author, &bk.Price)
+				if err != nil {
+					log.Fatal(err)
+				}
+				bks = append(bks, bk)
+			}
+
+			c.HTML(http.StatusOK, "books.create_ok.tmpl.html", nil)
+
+		}
+
+
+
+		// go back to the main page
+		// c.HTML(http.StatusOK, "index.tmpl.html", bks)
+
+	})
+
+
+
+
+	router.GET("/books/update/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		//value, _ := strconv.Atoi(id)
+
+		rows, err := db.Query("SELECT * FROM books where ISBN = $1", id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer rows.Close()
+
+		bk := new(Book)
+
+		for rows.Next() {
+			err := rows.Scan(&bk.Isbn, &bk.Title, &bk.Author, &bk.Price)
+			if err != nil {
+				log.Fatal(err)
+			}
+			// need to trim it
+			//bk.Isbn = strings.TrimSpace(bk.Isbn)
+		}
+		c.HTML(http.StatusOK, "books.update.tmpl.html", bk)
+
+	})
+
+	router.POST("/books/update/:id", func(c *gin.Context) {
+		//c.HTML(http.StatusOK, "index.tmpl.html", data)
+		id := c.PostForm("id")
+
+		Isbn := c.PostForm("Isbn")
+		Author := c.PostForm("Author")
+		Title := c.PostForm("Title")
+		Price := c.PostForm("Price")
+
+		// Update
+		stmt, err := db.Prepare(
+			"update BOOKs set Author = $1, Title = $2, Price = $3 where ISBN=$4")
+		checkErr(err)
+		fmt.Println("statement is: ", stmt)
+
+		val, err := strconv.ParseFloat(Price, 32)
+
+		fmt.Println("Author, Title, val, Isbn are: ", Author, Title, val, Isbn)
+
+		res, err2 := stmt.Exec(Author, Title, val, Isbn)
+		checkErr(err2)
+		defer stmt.Close()
+
+		rowsAffected, err3 := res.RowsAffected()
+		checkErr(err3)
+		fmt.Println("rowsAffected is: ", rowsAffected)
+
+
+
+		c.HTML(http.StatusOK, "books.update_post.tmpl.html", id)
+
+	})
+
+	router.GET("/books/delete/:id", func(c *gin.Context) {
+		id := c.Param("id")
+
+		bk := new(Book)
+		bk.Isbn = id
+
+		c.HTML(http.StatusOK, "books.delete.tmpl.html", bk)
+
+	})
+
+	router.POST("/books/delete/:id", func(c *gin.Context) {
+		//c.HTML(http.StatusOK, "index.tmpl.html", data)
+		id := c.Param("id")
+
+		Isbn := id
+
+		// Update
+		stmt, err := db.Prepare(
+			"delete from BOOKs where ISBN=$1")
+		checkErr(err)
+		fmt.Println("statement is: ", stmt)
+
+		fmt.Println("ISBN is: ", Isbn)
+
+		res, err2 := stmt.Exec(Isbn)
+		checkErr(err2)
+		defer stmt.Close()
+
+		rowsAffected, err3 := res.RowsAffected()
+		checkErr(err3)
+		fmt.Println("rowsAffected is: ", rowsAffected)
+
+		c.HTML(http.StatusOK, "books.delete_post.tmpl.html", id)
+
+	})
+
 
 	router.GET("/onlinetraces", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "onlinetraces.tmpl.html", nil)
@@ -293,6 +472,27 @@ func main() {
 		log.Printf("successfully uploaded file to %s/%s\n", bucket, key)
 
 		c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", file.Filename))
+	})
+
+
+	router.GET("/", func(c *gin.Context) {
+		//c.HTML(http.StatusOK, "index.tmpl.html", data)
+		rows, err := db.Query("SELECT * FROM books order by isbn")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer rows.Close()
+		bks := make([]*Book, 0)
+		for rows.Next() {
+			bk := new(Book)
+			err := rows.Scan(&bk.Isbn, &bk.Title, &bk.Author, &bk.Price)
+			if err != nil {
+				log.Fatal(err)
+			}
+			bks = append(bks, bk)
+		}
+		c.HTML(http.StatusOK, "index.tmpl.html", bks)
+
 	})
 
 	router.Run(":" + port)

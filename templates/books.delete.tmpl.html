@@ -1,0 +1,88 @@
+<head>
+    <title>
+    </title>
+
+    <meta name="keywords" content=
+            "new password manager, hint, password hint, password, username, website name, password manager"
+    />
+    <meta name="description" content=
+            "Free Password Manager based on hints. No math encryption, just human encryption">
+
+
+
+    <link rel="icon" type="image/x-icon"
+          href="/static/images/drawing-svg-i-hate-passwordv4.ico" />
+
+    <link href="/static/bootstrap3.3.6/css/bootstrap.min.css"
+          rel="stylesheet" media="screen">
+    <link href="/static/css/site.css"
+          rel="stylesheet" media="screen">
+    <link rel="stylesheet"
+          href=
+                  "//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    >
+
+
+
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div>
+                <h3 class="text-center">Are you sure that you want to delete?</h3>
+            </div>
+            <form action="/books/delete/{{.Isbn}}" method="post">
+
+                <input type="hidden"  name = "Isbn" value="{{.Isbn}}"/>
+
+
+                <div>
+        <span class="right20percent">
+              <button class="btn btn-primary" type="reset" value="Reset">Reset</button>
+        </span>
+                </div>
+
+
+                <div>
+        <span class="right20percent">
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </span>
+                </div>
+
+            </form>
+
+            <div>
+        <span class="right20percent">
+            <a class="text-center btn btn-primary"
+               href="/">
+                Back to the main page</a>
+        </span>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <p>
+                <a href="/contac-us/">Contact Us</a> |
+                <a href="/about-us/">About Us</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/bootstrap3.3.6/js/jquery-2.2.4.min.js">
+</script>
+<script src="/static/bootstrap3.3.6/js/bootstrap.min.js">
+</script>
+
+</body>

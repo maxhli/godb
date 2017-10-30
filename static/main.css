@@ -24,3 +24,9 @@
     border: 2px solid white; }
     .jumbotron .lang-logo img {
       max-width: 100%; }
+
+
+.floating-box {
+    display: inline-block;
+    width: 150px;
+}

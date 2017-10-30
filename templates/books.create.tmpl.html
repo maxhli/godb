@@ -18,8 +18,13 @@
 
     <link href="/static/bootstrap3.3.6/css/bootstrap.min.css"
           rel="stylesheet" media="screen">
-    <link href="/static/css/site.css"
+    <link href="/static/site.css"
           rel="stylesheet" media="screen">
+
+    <link href="/static/main.css"
+          rel="stylesheet" media="screen">
+
+
     <link rel="stylesheet"
           href=
                   "//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
@@ -38,38 +43,38 @@
                     Clicking on "Back to the list" does not update anything.</h3>
             </div>
             <form action="/books/create" method="post">
-                <div>
+                <div style="margin-top:10px">
 
         <span class="right20percent">
-            <label for="id_Isbn">ISBN:</label>
+            <label for="id_Isbn" class="floating-box">ISBN:</label>
         </span>
                     <input id="id_Isbn" maxlength="254"
                            name="Isbn" type="text" value="" />
                     <span class="helptext">ISBN</span>
                 </div>
-                <div>
+                <div style="margin-top:10px">
 
         <span class="right20percent">
-             <label for="id_Title">Title:</label>
+             <label for="id_Title" class="floating-box">Title:</label>
         </span>
                     <input id="id_Title" maxlength="255"
                            name="Title" type="text" value="" />
                     <span class="helptext">Title
         </span>
                 </div>
-                <div>
+                <div style="margin-top:10px">
 
         <span class="right20percent">
-            <label for="id_Author">Author:</label>
+            <label for="id_Author" class="floating-box">Author:</label>
         </span>
                     <input id="id_Author" maxlength="255"
                            name="Author" type="text" value="" />
                     <span class="helptext">Author        </span>
                 </div>
-                <div>
+                <div style="margin-top:10px">
 
         <span class="right20percent">
-            <label for="id_price">
+            <label for="id_price" class="floating-box">
                 Price:
             </label>
         </span>
@@ -79,7 +84,7 @@
         </span>
                 </div>
 
-                <div>
+                <div style="margin-top:10px">
         <span class="right20percent">
             <input type="submit" value="Create" />
         </span>
@@ -87,7 +92,7 @@
 
             </form>
 
-            <div>
+            <div style="margin-top:10px">
         <span class="right20percent">
             <a class="text-center btn btn-primary"
                href="/">

@@ -79,9 +79,9 @@ func main() {
 	args += "password=" + os.Getenv("password")
 	log.Println("args is: ", args)
 
-	var URI = os.Getenv("URI")
+	var DATABASE_URL = os.Getenv("DATABASE_URL")
 
-	db, errDB := sql.Open("postgres", URI)
+	db, errDB := sql.Open("postgres", DATABASE_URL)
 	defer db.Close()
 
 	if errDB != nil {

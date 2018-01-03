@@ -1,7 +1,10 @@
 .jumbotron {
-  background: #532F8C;
+  /* background: #532F8C; */
+  background: lightgreen;
   color: white;
-  padding-bottom: 80px; }
+  padding-bottom: 80px;
+}
+
   .jumbotron .btn-primary {
     background: #845ac7;
     border-color: #845ac7; }
